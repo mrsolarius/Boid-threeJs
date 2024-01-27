@@ -1,6 +1,6 @@
-import { Euler, PCFSoftShadowMap, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
+import { PCFSoftShadowMap, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { BoidAquariumEntity } from '../entity/boid-aquarium.entity';
-import { BoidEntity } from '../entity/boid.entity';
+import { BoidEnvironements } from '../BoidEnvironements';
 
 export default class BoidScene {
 	private renderer: WebGLRenderer;
@@ -8,18 +8,19 @@ export default class BoidScene {
 
 	private camera: PerspectiveCamera;
 	private aquarium: BoidAquariumEntity;
-	private boidsEntitys: BoidEntity[] = [];
+	private environement: BoidEnvironements;
 
 	constructor() {
 		this.renderer = new WebGLRenderer();
 		this.scene = new Scene();
 		this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 		this.aquarium = new BoidAquariumEntity();
+		this.environement = new BoidEnvironements(10);
 		this.initScene();
 	}
 
 	initScene() {
-		this.camera.position.z = 50;
+		this.camera.position.z = 500;
 
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.shadowMap.type = PCFSoftShadowMap;
@@ -29,10 +30,8 @@ export default class BoidScene {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		document.body.appendChild(this.renderer.domElement);
 
-		for (let i = 0; i < 10; i++) {
-			const newBoid = new BoidEntity(new Vector3(i * 10, 0, 0), new Euler(0, 0, 0));
-			this.boidsEntitys.push(newBoid);
-			this.scene.add(newBoid.mesh);
+		for (const boid of this.environement.allBoidEntity) {
+			this.scene.add(boid.mesh);
 		}
 
 		this.scene.add(this.aquarium.mesh);
@@ -42,9 +41,7 @@ export default class BoidScene {
 
 	animate() {
 		requestAnimationFrame(this.animate.bind(this));
-		for (const boid of this.boidsEntitys) {
-			boid.simulate();
-		}
+		this.environement.simulate();
 		this.renderer.render(this.scene, this.camera);
 	}
 }
