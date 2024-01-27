@@ -1,0 +1,25 @@
+{
+  "name": "boid-threejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrsolarius/Boid-threeJs.git"
+  },
+  "author": "MrSolarius",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrsolarius/Boid-threeJs/issues"
+  },
+  "homepage": "https://github.com/mrsolarius/Boid-threeJs#readme",
+  "dependencies": {
+    "three": "^0.160.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.12"
+  }
+}
