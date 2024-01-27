@@ -1,4 +1,4 @@
-import { CylinderGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { BoxGeometry, CylinderGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 
 const TILE_SIZE = 1;
 const scene = new Scene();
@@ -20,6 +20,11 @@ for (let i = -4; i < 4; i++) {
 	meshArray.push(cylinder);
 }
 
+const aquariumGeometry = new BoxGeometry(100, 100, 100); // You can adjust the size as needed
+const aquariumMaterial = new MeshBasicMaterial({ color: '#00ff00', wireframe: true });
+const aquariumMesh = new Mesh(aquariumGeometry, aquariumMaterial);
+scene.add(aquariumMesh);
+
 function animate() {
 	requestAnimationFrame(animate);
 
@@ -27,6 +32,7 @@ function animate() {
 		mesh.rotation.x += 0.01;
 		mesh.rotation.y += 0.01;
 	}
+
 	renderer.render(scene, camera);
 }
 
